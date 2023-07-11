@@ -3,8 +3,6 @@ package com.thalasoft.sqlpreorderedtree.data.model.domain;
 import java.util.Set;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,8 +11,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.validation.constraints.NotNull;
 
-import com.thalasoft.sqlpreorderedtree.data.model.constant.ProductTypeEnum;
-
+import jakarta.persistence.ManyToOne;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -48,7 +45,8 @@ public class Product {
   private Set<ProductPart> productParts;
 
   @NotNull
-  @Enumerated(EnumType.STRING)
-  private ProductTypeEnum productTypeEnum;
+  @JoinColumn(name = "product_type_id", referencedColumnName = "id")
+  @ManyToOne(optional = true)
+  private ProductType productType;
 
 }
