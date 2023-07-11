@@ -13,7 +13,7 @@ import com.thalasoft.sqlpreorderedtree.data.model.domain.ProfileProduct;
 public interface ProfileProductRepository extends JpaRepository<ProfileProduct, Long> {
 
   @Query("SELECT pp FROM ProfileProduct pp WHERE pp.profile = :profile AND pp.product.productType = :productType ORDER BY pp.product.productType.productTypeEnum, pp.product.name")
-  List<ProfileProduct> findByProfileAndProducType(@Param("cabinLayout") Profile profile, @Param("productType") ProductType productType);
+  List<ProfileProduct> findByProfileAndProducType(@Param("profile") Profile profile, @Param("productType") ProductType productType);
 
   @Query("SELECT pp FROM ProfileProduct pp WHERE pp.profile = :profile AND pp.profile.productType IN (SELECT ptchild from ProducType pt, ProducType ptchild WHERE pt = :producType AND ptchild.treeLeft >= pt.treeLeft AND ptchild.treeRight <= pt.treeRight) ORDER BY pp.product.productType.treeLeft ASC, pp.product.name")
   List<ProfileProduct> findByProfileInProductTypesTree(@Param("profile") Profile profile, @Param("producType") ProductType producType);
